@@ -9,9 +9,23 @@
   h1 { font-size: 1.6em; }
   h2 { font-size: 1.2em; margin-top: 2em; }
   footer { margin-top: 3em; font-size: 0.85em; color: #666; }
+  .lang-switch { margin-bottom: 2em; }
+  .lang-switch button {
+    font: inherit; padding: 6px 14px; margin-right: 8px; border-radius: 20px;
+    border: 1px solid #999; background: #fff; cursor: pointer;
+  }
+  .lang-switch button.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  [data-lang]:not(.active) { display: none; }
 </style>
 </head>
 <body>
+
+<div class="lang-switch">
+  <button type="button" onclick="setLang('no')" id="btn-no">Norsk</button>
+  <button type="button" onclick="setLang('en')" id="btn-en">English</button>
+</div>
+
+<div data-lang="no" class="active">
 <h1>Sletting av data – Finn min kvittering</h1>
 <p><em>Sist oppdatert: august 2026</em></p>
 
@@ -40,5 +54,50 @@ som må godkjennes av noen andre.</p>
 Google Play-side.</p>
 
 <footer>Finn min kvittering – no.finnminkvittering.app</footer>
+</div>
+
+<div data-lang="en">
+<h1>Data Deletion – Finn min kvittering (Find My Receipt)</h1>
+<p><em>Last updated: August 2026</em></p>
+
+<p><strong>Finn min kvittering</strong> never stores your data on a server the developer controls.
+Everything you add to the app – receipt images, purchase information, warranty data, location (if
+added) – is stored exclusively in the storage location(s) you have chosen yourself: Google Drive,
+OneDrive, Dropbox, or locally on your device.</p>
+
+<h2>You don't need to ask anyone to delete your data</h2>
+<p>Because the developer has never had access to or a copy of your data, there is no central
+database to request deletion from. You already have full, direct control yourself, at any time:</p>
+<ul>
+  <li><strong>Delete a single receipt</strong>: open the receipt in the app and choose "Delete".</li>
+  <li><strong>Delete everything</strong>: go directly to your storage location (e.g. the Google
+  Drive app, or the folder on your PC/phone) and delete the folder/files the app created there.</li>
+  <li><strong>Remove the app's access to Google Drive</strong>: go to the app's settings and tap
+  "Disconnect", or remove the access directly from your account settings at
+  <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</li>
+</ul>
+
+<p>Deletion happens immediately and directly in your own storage location – no waiting, no request
+that needs to be approved by anyone else.</p>
+
+<h2>Contact</h2>
+<p>If you have questions about this, you can contact the developer via the contact information
+listed on the app's Google Play page.</p>
+
+<footer>Finn min kvittering – no.finnminkvittering.app</footer>
+</div>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('[data-lang]').forEach(function(el) {
+    el.classList.toggle('active', el.getAttribute('data-lang') === lang);
+  });
+  document.getElementById('btn-no').classList.toggle('active', lang === 'no');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  localStorage.setItem('fmk-lang', lang);
+}
+setLang(localStorage.getItem('fmk-lang') || 'no');
+</script>
+
 </body>
 </html>

@@ -9,9 +9,23 @@
   h1 { font-size: 1.6em; }
   h2 { font-size: 1.2em; margin-top: 2em; }
   footer { margin-top: 3em; font-size: 0.85em; color: #666; }
+  .lang-switch { margin-bottom: 2em; }
+  .lang-switch button {
+    font: inherit; padding: 6px 14px; margin-right: 8px; border-radius: 20px;
+    border: 1px solid #999; background: #fff; cursor: pointer;
+  }
+  .lang-switch button.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  [data-lang]:not(.active) { display: none; }
 </style>
 </head>
 <body>
+
+<div class="lang-switch">
+  <button type="button" onclick="setLang('no')" id="btn-no">Norsk</button>
+  <button type="button" onclick="setLang('en')" id="btn-en">English</button>
+</div>
+
+<div data-lang="no" class="active">
 <h1>Personvernerklæring – Finn min kvittering</h1>
 <p><em>Sist oppdatert: august 2026</em></p>
 
@@ -62,5 +76,73 @@ appens innstillinger.</p>
 Google Play-side.</p>
 
 <footer>Finn min kvittering – no.finnminkvittering.app</footer>
+</div>
+
+<div data-lang="en">
+<h1>Privacy Policy – Finn min kvittering (Find My Receipt)</h1>
+<p><em>Last updated: August 2026</em></p>
+
+<p>"Finn min kvittering" is built so that you fully own and control your own data. The app has no
+server of its own – everything you add is stored only in the storage location(s) you choose
+yourself (e.g. Google Drive, OneDrive, Dropbox, or locally on your device).</p>
+
+<h2>What the app stores, and where</h2>
+<ul>
+  <li><strong>Receipt images and data</strong> (store name, amount, date, nickname, category,
+  warranty information, serial number, history events) are stored exclusively in the storage
+  location(s) you choose in the app's settings. The developer has no access to this content and
+  never stores it on any server they control.</li>
+  <li><strong>Google Drive access</strong> (if you connect Google Drive) uses the narrow
+  "drive.file" permission – the app only gets access to files/folders it creates itself, or the
+  one folder you explicitly pick. The app cannot see the rest of your Google Drive account.</li>
+  <li><strong>Location (GPS)</strong> is only stored if you explicitly choose to add the location
+  of a purchase. This information is stored together with the rest of the receipt data in your own
+  storage location, not with the developer.</li>
+  <li><strong>Local index</strong>: the app keeps a local search index on your device
+  (Android/Windows) for fast search – this is synced to your own cloud storage locations as a
+  backup, but never leaves the developer's control because there is no developer server it is sent
+  to.</li>
+</ul>
+
+<h2>What the app does not do</h2>
+<ul>
+  <li>Does not sell or share data with third parties.</li>
+  <li>Shows no ads.</li>
+  <li>Has no user account registration with the developer – sign-in happens directly with your
+  storage provider (e.g. Google), not a service the developer controls.</li>
+  <li>Does not track usage for third-party analytics purposes.</li>
+</ul>
+
+<h2>Permissions the app may request</h2>
+<ul>
+  <li><strong>Camera</strong> – to scan receipts.</li>
+  <li><strong>Location</strong> – optional, only if you choose to add a location.</li>
+  <li><strong>Storage/file access</strong> – to read/write to the storage location(s) you choose.</li>
+</ul>
+
+<h2>Your rights</h2>
+<p>Since all data is stored in your own storage location, you have full control: you can delete
+data directly in your storage location at any time, or by deleting receipts/disconnecting storage
+locations in the app's settings.</p>
+
+<h2>Contact</h2>
+<p>Privacy questions can be directed to the developer via the contact information listed on the
+app's Google Play page.</p>
+
+<footer>Finn min kvittering – no.finnminkvittering.app</footer>
+</div>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('[data-lang]').forEach(function(el) {
+    el.classList.toggle('active', el.getAttribute('data-lang') === lang);
+  });
+  document.getElementById('btn-no').classList.toggle('active', lang === 'no');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  localStorage.setItem('fmk-lang', lang);
+}
+setLang(localStorage.getItem('fmk-lang') || 'no');
+</script>
+
 </body>
 </html>
